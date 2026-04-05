@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Donate - Trust Construction</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="toggle-btn" onclick="toggleMode()">🌙</div>
+
+<header>
+    <h1>🙏 Donate for Trust Construction</h1>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+</header>
+
+<section>
+
+```
+<div class="card">
+
+    <h2>🙏 Support Our Trust 🙏</h2>
+
+    <p>
+        Your generous donation will help us complete the construction of the 
+        <b>Sree Chandi Sametha Danavayababu Trust</b>.
+    </p>
+
+    <hr>
+
+    <!-- QR CODE -->
+    <img src="https://harshavardhangokada.github.io/temple-website/qr.png" 
+         style="width:220px; height:220px; display:block; margin:auto;">
+
+    <p class="highlight">📷 Scan & Donate via UPI</p>
+
+    <!-- UPDATED UPI SECTION -->
+    <div class="upi-section">
+
+        <h3 style="text-align:center;">💰 Choose Payment App</h3>
+
+        <!-- PHONEPE -->
+        <a href="phonepe://pay?pa=9391372583@sbi&pn=Sree%20Chandi%20Sametha%20Danavayababu%20Trust&cu=INR">
+            <button class="donate-btn">📱 Pay with PhonePe</button>
+        </a>
+
+        <!-- GPAY -->
+        <a href="tez://upi/pay?pa=9391372583@sbi&pn=Sree%20Chandi%20Sametha%20Danavayababu%20Trust&cu=INR">
+            <button class="donate-btn">💳 Pay with Google Pay</button>
+        </a>
+
+        <!-- PAYTM -->
+        <a href="paytmmp://pay?pa=9391372583@sbi&pn=Sree%20Chandi%20Sametha%20Danavayababu%20Trust&cu=INR">
+            <button class="donate-btn">💰 Pay with Paytm</button>
+        </a>
+
+        <!-- OTHER UPI -->
+        <a href="upi://pay?pa=9391372583@sbi&pn=Sree%20Chandi%20Sametha%20Danavayababu%20Trust&cu=INR">
+            <button class="donate-btn">🔗 Other UPI Apps</button>
+        </a>
+
+    </div>
+
+    <p><b>UPI ID:</b> 9391372583@sbi</p>
+
+    <hr>
+
+    <!-- WHATSAPP CONFIRMATION -->
+    <a href="https://wa.me/919391372583?text=I%20have%20donated%20to%20the%20Trust">
+        <button class="donate-btn">📲 Confirm on WhatsApp</button>
+    </a>
+
+    <p style="margin-top:10px;">
+        You can confirm your donation through WhatsApp
+    </p>
+
+    <hr>
+
+    <p class="highlight">
+        🙏 Every donation brings us closer to completing this sacred temple 🙏
+    </p>
+
+</div>
+```
+
+</section>
+
+<footer>
+    © 2026 Sree Chandi Sametha Danavayababu Trust
+</footer>
+
+<script>
+function toggleMode() {
+    document.body.classList.toggle("dark");
+    localStorage.setItem("mode", document.body.classList.contains("dark") ? "dark" : "light");
+}
+
+window.onload = function () {
+    if (localStorage.getItem("mode") === "dark") {
+        document.body.classList.add("dark");
+    }
+};
+</script>
+
+</body>
+</html>

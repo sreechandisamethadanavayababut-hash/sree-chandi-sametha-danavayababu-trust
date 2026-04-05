@@ -327,3 +327,628 @@ body.dark .event-box {
 body.dark .donators-table td {
     border-color: #444;
 }
+/* ================= ABOUT PAGE ================= */
+
+.about-section {
+    padding: 50px 20px;
+}
+
+/* FLEX CONTAINER */
+.about-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+/* TEXT */
+.about-text {
+    max-width: 450px;
+}
+
+.about-text h2 {
+    margin-bottom: 10px;
+}
+
+.about-text p {
+    line-height: 1.6;
+}
+
+/* IMAGE */
+.about-image img {
+    width: 300px;
+    max-width: 100%;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    transition: 0.3s;
+}
+
+.about-image img:hover {
+    transform: scale(1.05);
+}
+
+/* LIGHT SECTION */
+.about-section.light {
+    background: rgba(255,255,255,0.3);
+    border-radius: 20px;
+    margin: 20px;
+}
+
+/* ================= COMMITTEE FIX ================= */
+
+.committee-section {
+    text-align: center;
+    margin: 60px auto;
+    padding: 20px;
+    max-width: 900px;
+}
+
+.committee-section h2 {
+    margin-bottom: 10px;
+}
+
+.committee-desc {
+    max-width: 700px;
+    margin: 10px auto;
+    line-height: 1.6;
+}
+
+.committee-section img {
+    width: 70%;
+    max-width: 500px;
+    margin: 20px auto;
+    display: block;
+    border-radius: 20px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+    transition: 0.3s;
+}
+
+.committee-section img:hover {
+    transform: scale(1.03);
+}
+
+input {
+    padding: 10px;
+    margin: 5px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
+
+#totalAmount {
+    color: #b45309;
+    font-size: 28px;
+    font-weight: bold;
+}
+input {
+    padding: 10px;
+    margin: 5px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
+
+#totalAmount {
+    color: #b45309;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.donators-table img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.about-hero {
+    text-align: center;
+    padding: 30px;
+}
+
+.about-hero img {
+    width: 90%;
+    max-width: 400px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.about-hero h2 {
+    margin-top: 15px;
+    color: #d97706;
+}
+
+.about-section {
+    padding: 40px;
+    text-align: center;
+}
+
+.about-section.light {
+    background: rgba(255,255,255,0.5);
+}
+
+.about-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.about-box {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    width: 250px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+body.dark .about-box {
+    background: #1e293b;
+}
+.future-temple {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.future-temple h2 {
+    font-size: 28px;
+    color: #d97706;
+    margin-bottom: 10px;
+}
+
+.future-subtext {
+    max-width: 600px;
+    margin: auto;
+    font-size: 16px;
+    color: #444;
+    margin-bottom: 30px;
+}
+
+.future-image-box {
+    display: flex;
+    justify-content: center;
+}
+
+.future-image-box img {
+    width: 90%;
+    max-width: 700px;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    transition: transform 0.4s ease;
+}
+
+.future-image-box img:hover {
+    transform: scale(1.05);
+}
+
+/* DARK MODE */
+body.dark .future-subtext {
+    color: #ccc;
+}
+/* EVENTS SECTION */
+.events-section {
+    padding: 60px 20px;
+}
+
+/* TITLE */
+.section-title {
+    text-align: center;
+    margin: 40px 0 20px;
+    color: #b45309;
+}
+
+/* MAIN WRAPPER */
+.event-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    max-width: 900px;
+    margin: auto;
+    margin-bottom: 40px;
+}
+
+/* REVERSE */
+.event-wrapper.reverse {
+    flex-direction: row-reverse;
+}
+
+/* IMAGE */
+.event-image img {
+    width: 300px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+/* TEXT */
+.event-text {
+    max-width: 400px;
+    text-align: left;
+}
+
+.event-text h3 {
+    margin-bottom: 10px;
+    color: #d97706;
+}
+
+.event-text p {
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+/* GODDESS SECTION */
+.goddess-section {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.goddess-section h2 {
+    color: #d97706;
+    margin-bottom: 20px;
+}
+
+.goddess-container img {
+    width: 280px;
+    max-width: 90%;
+    border-radius: 20px;
+
+    /* divine glow 🔥 */
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.3),
+        0 0 30px rgba(255, 153, 0, 0.5);
+
+    transition: 0.3s;
+}
+
+.goddess-container img:hover {
+    transform: scale(1.05);
+}
+
+.goddess-text {
+    max-width: 600px;
+    margin: 20px auto;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* DARK MODE */
+body.dark .goddess-text {
+    color: #ccc;
+}
+/* EVENTS PAGE CLEAN DESIGN */
+
+.events-section {
+    max-width: 1000px;
+    margin: auto;
+    padding: 50px 20px;
+}
+
+/* ROW */
+.event-row {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+/* ALTERNATE */
+.event-row.reverse {
+    flex-direction: row-reverse;
+}
+
+/* IMAGE */
+.event-row img {
+    width: 200px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+}
+
+/* TEXT */
+.event-content {
+    flex: 1;
+}
+
+.event-content h3 {
+    margin-bottom: 8px;
+    color: #d97706;
+}
+
+.event-content p {
+    line-height: 1.6;
+}
+
+/* MOBILE FIX */
+@media (max-width: 768px) {
+    .event-row {
+        flex-direction: column !important;
+        text-align: center;
+    }
+
+    .event-row img {
+        width: 100%;
+        height: auto;
+    }
+}
+body {
+    font-family: 'Poppins', 'Noto Sans Telugu', sans-serif;
+}
+/* ===== ABOUT PAGE FIX ===== */
+
+body {
+    background: linear-gradient(to bottom, #f6d365, #fda085);
+    font-family: 'Poppins', sans-serif;
+}
+
+/* headings */
+h2 {
+    font-size: 26px;
+    margin-bottom: 10px;
+}
+
+/* sections */
+.about-section {
+    padding: 40px 20px;
+    text-align: center;
+}
+
+/* goddess image */
+.goddess-box img {
+    width: 250px;
+    border-radius: 20px;
+    margin: 20px 0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+/* future temple */
+.future-image-box img {
+    width: 90%;
+    max-width: 600px;
+    border-radius: 20px;
+    margin-top: 20px;
+}
+
+/* highlight */
+.highlight {
+    color: #b45309;
+    font-weight: bold;
+}
+/* POPUP */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+}
+
+.modal-content {
+    background: rgb(213, 204, 192);
+    margin: auto;
+    padding: 20px;
+    width: 70%;
+    border-radius: 15px;
+}
+
+.close {
+    float: right;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.modal-body {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+#modalImg {
+    width: 250px;
+    border-radius: 10px;
+}
+
+/* ===== MODAL TEXT BIG DESIGN ===== */
+
+.modal-text {
+    text-align: left;
+    padding: 20px;
+}
+
+/* NAME */
+#modalName {
+    font-size: 50px;   /* BIG */
+    font-weight: bold;
+    justify-content: center;
+    color: #7c2d12;
+    margin-bottom: 15px;
+
+}
+
+/* DONATION */
+#modalAmount {
+    font-size: 40px;
+    font-weight: bold;
+    color: #065f46;
+    margin-bottom: 10px;
+}
+
+/* DESIGNATION */
+#modalDesignation {
+    font-size: 40px;
+    font-weight:bold;
+    color: #ed08cf;
+}
+#modalImg {
+    width: 280px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 2px solid #eee;
+}
+
+.modal-header h2 {
+    font-size: 18px;
+    color: #8b4513;
+}
+
+.share-btn {
+    background: #25D366;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.share-btn:hover {
+    background: #1ebe5d;
+}
+
+#modalType {
+    font-size: 20px;
+    font-weight: bold;
+    color: #7c3aed;
+    margin-top: 10px;
+}
+.modal-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    position: relative;
+}
+
+.trust-title {
+    font-size: 26px;
+    font-weight: bold;
+    text-align: center;
+    color: #8b4513;
+    margin-bottom: 10px;
+}
+
+.share-btn {
+    background: #25D366;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.modal-header .close {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    font-size: 22px;
+}
+
+.donators-table img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;   /* no crop */
+    background: #fff;
+    border-radius: 10px;
+}
+.share-card {
+    width: 350px;
+    padding: 20px;
+    background: #f5e6cc;
+    border-radius: 20px;
+    text-align: center;
+    border: 4px solid orange;
+    font-family: sans-serif;
+}
+
+/* title */
+.share-card .trust-title {
+    font-size: 18px;
+    color: #8b3c00;
+    font-weight: bold;
+}
+
+/* line */
+.card-line {
+    height: 2px;
+    background: orange;
+    margin: 10px 0;
+}
+
+
+/* TEXT */
+.card-name {
+    color: purple;
+    font-size: 22px;
+    margin-top: 10px;
+}
+
+.card-amount {
+    color: green;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.card-designation {
+    color: deeppink;
+    font-size: 16px;
+}
+
+.card-type {
+    color: #444;
+    font-size: 14px;
+}
+
+/* divider */
+.card-divider {
+    border-top: 2px dotted orange;
+    margin: 15px 0;
+}
+
+/* footer */
+.card-footer1 {
+    color: brown;
+    font-weight: bold;
+}
+
+.card-footer2 {
+    font-style: italic;
+}
+
+.card-footer3 {
+    color: green;
+}
+/* 🔥 SMART FACE FRIENDLY IMAGE FIX */
+
+.donators-table img {
+    width: 65px;
+    height: 65px;
+
+    object-fit: cover;
+
+    /* 🔥 FACE FOCUS AREA (TOP CENTER) */
+    object-position: center top;
+
+    border-radius: 50%;
+
+    border: 3px solid #fff;
+    box-shadow: 0 0 8px rgba(0,0,0,0.25);
+
+    transition: transform 0.3s ease;
+}
+
+/* 🔥 HOVER EFFECT */
+.donators-table img:hover {
+    transform: scale(1.15);
+}
+
+.donators-table img {
+    cursor: pointer;
+}

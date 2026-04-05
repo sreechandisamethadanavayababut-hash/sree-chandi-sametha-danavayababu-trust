@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Contact - Temple Construction</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Dark Mode Toggle -->
+
+<div class="toggle-btn" onclick="toggleMode()">🌙</div>
+
+<header>
+    <h1>📞 Contact for Temple Construction</h1>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="donate.html">Donate</a>
+        <a href="donators.html">Our Donators</a>
+    </nav>
+</header>
+
+<section>
+    <div class="card">
+
+```
+    <h2>🙏 Support Temple Construction</h2>
+
+    <p>
+        We are currently constructing the 
+        <b>Sri Devi Sametha Danavayababu Temple</b>.
+        Devotees who wish to contribute or need more details
+        can contact us using the information below.
+    </p>
+
+    <hr>
+
+    <!-- CLICKABLE CONTACT DETAILS -->
+
+    <p><b>📱 Phone:</b> 
+        <a href="tel:9391372583">9391372583</a>
+    </p>
+
+    <p><b>📧 Email:</b><br>
+        <a href="mailto:sreechandisamethadanavayababu@gmail.com">
+            sreechandisamethadanavayababu@gmail.com
+        </a>
+    </p>
+
+    <p><b>📍 Location:</b> 
+    <a href="https://www.google.com/maps?q=KDevi Sametha Danavaibabu Temple" target="_blank">
+        Devi Sametha Danavaibabu Temple
+    </a>
+</p>
+
+    <hr>
+
+    <p>
+        Your contribution will help in building the temple and
+        supporting future spiritual activities.
+    </p>
+
+    <p class="highlight">
+        🙏 Every donation counts towards building this sacred place 🙏
+    </p>
+
+</div>
+```
+
+</section>
+
+<footer>
+    © 2026 Sri Devi Sametha Danavayababu Temple Construction | With devotion 🙏
+</footer>
+
+<!-- Dark Mode Script -->
+
+<script>
+function toggleMode() {
+    document.body.classList.toggle("dark");
+
+    if (document.body.classList.contains("dark")) {
+        localStorage.setItem("mode", "dark");
+    } else {
+        localStorage.setItem("mode", "light");
+    }
+}
+
+window.onload = function () {
+    if (localStorage.getItem("mode") === "dark") {
+        document.body.classList.add("dark");
+    }
+};
+</script>
+
+</body>
+</html>
