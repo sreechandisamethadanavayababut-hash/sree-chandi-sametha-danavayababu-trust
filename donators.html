@@ -225,6 +225,21 @@ localStorage.setItem("donors",JSON.stringify(donors));
 displayDonors();
 }
 
+function loadDonors(){
+
+db.collection("donors").onSnapshot(snapshot => {
+
+donors = [];
+
+snapshot.forEach(doc => {
+donors.push({id: doc.id, ...doc.data()});
+});
+
+displayDonors();
+
+});
+
+}
 function toggleStatus(i){
 donors[i].status = donors[i].status==="done"?"pending":"done";
 localStorage.setItem("donors",JSON.stringify(donors));
@@ -300,4 +315,4 @@ displayDonors();
 </script>
 
 </body>
-</html>
+</html> ¸
