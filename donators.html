@@ -3,14 +3,16 @@
 <head>
 <title>Our Donators</title>
 <link rel="stylesheet" href="style.css">
+
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 </head>
 
 <body>
 
 <header>
 <h1>🙏 Our Donators 🙏</h1>
-
 <nav>
 <a href="index.html">Home</a>
 <a href="about.html">About</a>
@@ -37,16 +39,10 @@
 
 <div id="adminPanel" style="display:none;text-align:center;">
 
-<input type="text" id="name" placeholder="Enter Name">
-
-<select id="type">
-<option value="money">💰 Money</option>
-<option value="material">🧱 Material</option>
-</select>
-
-<input type="text" id="amount" placeholder="Enter Amount or Material">
-<input type="text" id="photo" placeholder="Paste Image URL">
-<input type="text" id="designation" placeholder="Designation">
+<input id="name" placeholder="Enter Name">
+<input id="amount" placeholder="Enter Amount">
+<input id="photo" placeholder="Paste Image URL">
+<input id="designation" placeholder="Designation">
 
 <select id="vipType">
 <option value="normal">🙏 Normal</option>
@@ -54,7 +50,7 @@
 </select>
 
 <br>
-<button id="submitBtn" onclick="addDonor()">Add Donation</button>
+<button onclick="addDonor()">Add Donation</button>
 
 </div>
 
@@ -63,7 +59,7 @@
 <tr>
 <th>S.No</th>
 <th>Photo</th>
-<th>Full Name</th>
+<th>Name</th>
 <th>Donation</th>
 <th>Designation</th>
 <th>Type</th>
@@ -77,200 +73,98 @@
 
 </section>
 
-<!-- MODAL -->
-<div id="donorModal" class="modal">
-<div class="modal-content">
-
-<div class="modal-header">
-<h1>🛕🙏 Sree Chandi Sametha Danavayababu Temple Trust 🛕🙏</h1>
-<span class="close" onclick="closeModal()">×</span>
-</div>
-
-<div class="modal-body">
-<img id="modalImg">
-<div>
-<h3 id="modalName"></h3>
-<p id="modalAmount"></p>
-<p id="modalDesignation"></p>
-<p id="modalType"></p>
-</div>
-</div>
-
-</div>
-</div>
-
-<!-- 🔥 GREETING CARD -->
-<div id="greetingCard" style="display:none;width:400px;padding:20px;background:linear-gradient(135deg,#ffcc70,#ff8c00);border-radius:20px;text-align:center;">
-<h2>🛕🙏 Temple Trust 🙏🛕</h2>
-<img id="cardImg" style="width:120px;height:120px;border-radius:50%;object-fit:cover;">
-<h3 id="cardName"></h3>
-<p id="cardAmount"></p>
-<p id="cardDesignation"></p>
-<p>🙏 Thank you 🙏</p>
-</div>
-
-<footer>
-© 2026 Sree Chandi Sametha Danavayababu Trust
-</footer>
-
 <script>
 
-let donors = JSON.parse(localStorage.getItem("donors")) || [];
-let isAdmin=false;
-let editIndex=-1;
-let currentFilter="all";
+// 🔥 FIREBASE CONFIG
+const firebaseConfig = {
+  apiKey: "AIzaSyDYSEDrXTyixVYMnQ77C3J_zlCJNahrdAg",
+  authDomain: "temple-donations-2f3f6.firebaseapp.com",
+  projectId: "temple-donations-2f3f6",
+};
 
-async function translateToTelugu(text){
-let res = await fetch("https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=te&dt=t&q="+encodeURIComponent(text));
-let data = await res.json();
-return data[0][0][0];
-}
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
-function filterDonors(type){
-currentFilter=type;
+let donors = [];
+let isAdmin = false;
+let currentFilter = "all";
+
+// 🔥 REALTIME LOAD (VERY IMPORTANT)
+function loadDonors(){
+db.collection("donors").onSnapshot(snapshot => {
+donors = [];
+snapshot.forEach(doc => donors.push({id:doc.id,...doc.data()}));
 displayDonors();
+});
 }
 
+// LOGIN
 function adminLogin(){
 let pass=prompt("Enter Password");
 if(pass==="Hs@561986"){
 isAdmin=true;
 document.getElementById("adminPanel").style.display="block";
-displayDonors();
 }else alert("Wrong Password");
 }
 
+// ADD
 async function addDonor(){
 
-if(!isAdmin) return;
+let name = document.getElementById("name").value;
+let amount = document.getElementById("amount").value;
+let photo = document.getElementById("photo").value;
+let designation = document.getElementById("designation").value;
+let type = document.getElementById("vipType").value;
 
-let nameVal = document.getElementById("name").value.trim();
-let amountVal = document.getElementById("amount").value.trim();
-let photoVal = document.getElementById("photo").value.trim();
-let designationVal = document.getElementById("designation").value.trim();
-let vipVal = document.getElementById("vipType").value;
-let typeVal = document.getElementById("type").value;
-
-if(!nameVal || !amountVal){
+if(!name || !amount){
 alert("Enter details");
 return;
 }
 
-let nameTel = await translateToTelugu(nameVal);
-let desTel = designationVal ? await translateToTelugu(designationVal) : "-";
-
-let finalAmount = typeVal==="money" ? "₹"+amountVal : await translateToTelugu(amountVal);
-
-if(editIndex !== -1){
-donors[editIndex]={...donors[editIndex],name:nameTel,amount:finalAmount,photo:photoVal,designation:desTel,type:vipVal};
-editIndex=-1;
-document.getElementById("submitBtn").innerText="Add Donation";
-}else{
-donors.push({name:nameTel,amount:finalAmount,photo:photoVal,designation:desTel,type:vipVal,status:"pending"});
+// 🔥 FIX IMAGE
+if(!photo){
+photo = "https://via.placeholder.com/100";
 }
 
-localStorage.setItem("donors",JSON.stringify(donors));
-displayDonors();
+await db.collection("donors").add({
+name, amount:"₹"+amount, photo, designation, type, status:"pending"
+});
 
+loadDonors();
+
+// CLEAR
 document.getElementById("name").value="";
 document.getElementById("amount").value="";
 document.getElementById("photo").value="";
 document.getElementById("designation").value="";
 }
 
-// 🔥 NEW GREETING SHARE
-function shareDonor(i){
+// DELETE
+async function deleteDonor(i){
+await db.collection("donors").doc(donors[i].id).delete();
+}
 
+// STATUS
+async function toggleStatus(i){
 let d = donors[i];
+let newStatus = d.status==="done"?"pending":"done";
 
-document.getElementById("cardImg").src = d.photo;
-document.getElementById("cardName").innerText = d.name;
-document.getElementById("cardAmount").innerText = d.amount;
-document.getElementById("cardDesignation").innerText = d.designation;
-
-let card = document.getElementById("greetingCard");
-card.style.display="block";
-
-html2canvas(card).then(canvas=>{
-
-let img = canvas.toDataURL();
-card.style.display="none";
-
-let link=document.createElement("a");
-link.href=img;
-link.download="donation.png";
-link.click();
-
-let msg="🙏 Temple Donation 🙏";
-window.open("https://wa.me/?text="+encodeURIComponent(msg));
-
-});
+await db.collection("donors").doc(d.id).update({status:newStatus});
 }
 
-function editDonor(i){
-let d=donors[i];
-document.getElementById("name").value=d.name;
-document.getElementById("amount").value=d.amount.replace("₹","");
-document.getElementById("photo").value=d.photo;
-document.getElementById("designation").value=d.designation;
-document.getElementById("vipType").value=d.type;
-
-editIndex=i;
-document.getElementById("submitBtn").innerText="Update";
-}
-
-function deleteDonor(i){
-donors.splice(i,1);
-localStorage.setItem("donors",JSON.stringify(donors));
+// FILTER
+function filterDonors(type){
+currentFilter=type;
 displayDonors();
 }
 
-function loadDonors(){
-
-db.collection("donors").onSnapshot(snapshot => {
-
-donors = [];
-
-snapshot.forEach(doc => {
-donors.push({id: doc.id, ...doc.data()});
-});
-
-displayDonors();
-
-});
-
-}
-function toggleStatus(i){
-donors[i].status = donors[i].status==="done"?"pending":"done";
-localStorage.setItem("donors",JSON.stringify(donors));
-displayDonors();
-}
-
-function openModal(photo,name,amount,designation){
-document.getElementById("modalImg").src=photo;
-document.getElementById("modalName").innerText=name;
-document.getElementById("modalAmount").innerText=amount;
-document.getElementById("modalDesignation").innerText=designation;
-document.getElementById("modalType").innerText=amount.includes("₹")?"💰":"🧱";
-document.getElementById("donorModal").style.display="block";
-}
-
-function closeModal(){
-document.getElementById("donorModal").style.display="none";
-}
-
-window.onclick=function(e){
-if(e.target==document.getElementById("donorModal")){
-document.getElementById("donorModal").style.display="none";
-}
-}
-
+// DISPLAY
 function displayDonors(){
 
 let table=document.getElementById("donorTable");
 table.innerHTML="";
 let total=0;
-let serial=1;
+let s=1;
 
 donors.forEach((d,i)=>{
 
@@ -282,13 +176,8 @@ total+=val;
 
 table.innerHTML+=`
 <tr>
-<td>${serial++}</td>
-
-<td>
-<img src="${d.photo}" onclick="openModal('${d.photo}','${d.name}','${d.amount}','${d.designation}')"
-style="width:60px;height:60px;border-radius:50%;object-fit:cover;">
-</td>
-
+<td>${s++}</td>
+<td><img src="${d.photo}" style="width:60px;height:60px;border-radius:50%;object-fit:cover;"></td>
 <td>${d.name}</td>
 <td>${d.amount}</td>
 <td>${d.designation}</td>
@@ -297,10 +186,8 @@ style="width:60px;height:60px;border-radius:50%;object-fit:cover;">
 
 <td>
 ${isAdmin?`
-<button onclick="editDonor(${i})">✏️</button>
 <button onclick="toggleStatus(${i})">🔄</button>
 <button onclick="deleteDonor(${i})">🗑️</button>
-<button onclick="shareDonor(${i})">📤</button>
 `:""}
 </td>
 
@@ -310,9 +197,10 @@ ${isAdmin?`
 document.getElementById("totalAmount").innerText="💰 Total Collected: ₹"+total;
 }
 
-displayDonors();
+// INIT
+loadDonors();
 
 </script>
 
 </body>
-</html> ¸
+</html>
