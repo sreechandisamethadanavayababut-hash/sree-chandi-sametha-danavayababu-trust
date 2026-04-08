@@ -987,3 +987,22 @@ h2 {
     object-fit: contain;   /* 👈 FULL IMAGE visible */
     border-radius: 15px;
 }
+/* 🔥 DONOR IMAGE FIX */
+.donators-table img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;      /* fills circle properly */
+    object-position: center top; /* shows face clearly */
+    border: 2px solid #fff;
+}
+
+/* 🔥 POPUP IMAGE FIX */
+#modalImg {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center top; /* face focus */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
