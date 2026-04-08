@@ -952,3 +952,57 @@ h2 {
 .donators-table img {
     cursor: pointer;
 }
+/* 🔥 DONOR IMAGE FIX */
+.donators-table img {
+    width: 70px;
+    height: 70px;
+
+    object-fit: contain;   /* 👈 IMPORTANT (shows full image) */
+    background: #fff;
+
+    border-radius: 10px;   /* 👈 not full circle (so face won't cut) */
+    padding: 3px;
+
+    border: 2px solid #ddd;
+}
+
+/* 🔥 POPUP IMAGE (FULL CLEAR VIEW) */
+.modal-content img {
+    width: 300px;
+    height: auto;
+
+    object-fit: contain;
+    border-radius: 15px;
+}
+
+/* 🔥 EVENT & ABOUT IMAGES FIX */
+.event-row img,
+.about-image img,
+.goddess-box img {
+
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+
+    object-fit: contain;   /* 👈 FULL IMAGE visible */
+    border-radius: 15px;
+}
+/* 🔥 DONOR IMAGE FIX */
+.donators-table img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;      /* fills circle properly */
+    object-position: center top; /* shows face clearly */
+    border: 2px solid #fff;
+}
+
+/* 🔥 POPUP IMAGE FIX */
+#modalImg {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center top; /* face focus */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
