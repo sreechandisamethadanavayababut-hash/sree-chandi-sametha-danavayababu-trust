@@ -7,6 +7,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <style>
 #imageModal{
@@ -334,33 +335,28 @@ window.onclick = function(e) {
     document.getElementById("donorModal").style.display = "none";
   }
 };
-function shareDonor(i) {
-  let d = donors[i];
+//share donor 
+function shareDonor(i){
 
-  // Fill greeting card
-  document.getElementById("cardImg").src = d.photo;
-  document.getElementById("cardName").innerText = d.name;
-  document.getElementById("cardAmount").innerText = d.amount;
-  document.getElementById("cardDesignation").innerText = d.designation;
+let d = donors[i];
 
-  let card = document.getElementById("greetingCard");
-  card.style.display = "block";
+// message
+let message = `🙏 Temple Donation 🙏
+Name: ${d.name}
+Donation: ${d.amount}
+Designation: ${d.designation || "-"}`;
 
-  // Convert card to image
-  html2canvas(card).then(canvas => {
-    let img = canvas.toDataURL("image/png");
-    card.style.display = "none";
+// ✅ MOBILE SHARE (BEST)
+if (navigator.share) {
+    navigator.share({
+        title: "Temple Donation",
+        text: message
+    }).catch(err => console.log(err));
+} else {
+    // fallback for desktop
+    window.open("https://wa.me/?text=" + encodeURIComponent(message), "_blank");
+}
 
-    // Download image locally
-    let link = document.createElement("a");
-    link.href = img;
-    link.download = "donation.png";
-    link.click();
-
-    // WhatsApp only supports text, not direct image upload
-    let msg = `🙏 Temple Donation 🙏\n${d.name}\n${d.amount}\n${d.designation}\n\n(Please attach the downloaded card image)`;
-    window.open("https://wa.me/?text=" + encodeURIComponent(msg), "_blank");
-  });
 }
 
 // DISPLAY
@@ -458,7 +454,30 @@ window.onclick = function(e) {
     </div>
   </div>
 </div>
+<!-- GREETING CARD (HIDDEN) -->
+<div id="greetingCard" style="
+position:absolute;
+left:-9999px;
+width:600px;
+padding:20px;
+background:linear-gradient(135deg,#ffcc70,#ff8177);
+color:#000;
+font-family:sans-serif;
+border-radius:20px;
+text-align:center;
+">
 
+<h2>🛕🙏 Sree Chandi Sametha Danavayababu Temple Trust 🙏🛕</h2>
+
+<img id="cardImg" style="width:150px;height:150px;border-radius:50%;object-fit:cover;margin:10px;">
+
+<h3 id="cardName"></h3>
+<p id="cardAmount"></p>
+<p id="cardDesignation"></p>
+
+<p>🙏 Thank you for your contribution 🙏</p>
+
+</div>
 
 </body>
 </html>
