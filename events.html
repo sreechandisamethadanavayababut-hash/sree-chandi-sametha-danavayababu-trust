@@ -1,28 +1,53 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="te">
 <head>
-    <title>Temple Events</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events - Sree Chandi Sametha Danavayababu Temple Trust</title>
+    <meta name="description" content="Temple events, poojas, and spiritual activities conducted by Sree Chandi Sametha Danavayababu Temple Trust.">
+    <link rel="canonical" href="https://harshavardhangokada.github.io/temple-website/events.html">
+    <meta name="robots" content="index,follow">
+    <meta property="og:title" content="Events - Sree Chandi Sametha Danavayababu Temple Trust">
+    <meta property="og:description" content="Temple events and spiritual activities.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://harshavardhangokada.github.io/temple-website/events.html">
+    <meta property="og:image" content="https://harshavardhangokada.github.io/temple-website/chandi.jpg">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<!-- 🔊 AUDIO SYSTEM -->
+<audio id="bg-audio" loop>
+  <source src="temple-music.opus" type="audio/ogg; codecs=opus">
+  Your browser does not support the audio element.
+</audio>
 
-<header>
-    <h1>🔥 Temple Events</h1>
-<nav>
+
+<button class="audio-btn" onclick="toggleAudio()">🔊</button>
+
+<header class="ttd-topbar">
+    <div class="ttd-brand">
+        <img src="amma.jpg" alt="Lord Durgaamma logo">
+        <div>
+            <h1>🔥 Temple Events</h1>
+        </div>
+    </div>
+</header>
+<nav class="ttd-nav">
     <a href="index.html">Home</a>
     <a href="about.html">About</a>
+    <a href="events.html">Events</a>
     <a href="donate.html">Donate</a>
     <a href="contact.html">Contact</a>
+    <a href="donators.html">Our Donators</a>
 </nav>
-
-</header>
+<main class="page-container">
 
 <section class="events-section">
 
 <!-- EVENT 1 -->
 <div class="event-row">
-    <img src="chandi.jpg">
+    <img src="chandi.jpg" alt="Chandi homam event">
 
     <div class="event-content">
         <h3>🔥 చండీ హోమం</h3>
@@ -41,7 +66,7 @@
 
 <!-- EVENT 2 -->
 <div class="event-row reverse">
-    <img src="sankusthapana.jpg">
+    <img src="sankusthapana.jpg" alt="Temple reconstruction foundation event">
 
     <div class="event-content">
         <h3>🛕 ఆలయ పునర్ నిర్మాణం</h3>
@@ -60,7 +85,7 @@
 
 <!-- EVENT 3 -->
 <div class="event-row">
-    <img src="tulasi.jpg">
+    <img src="tulasi.jpg" alt="Tulasi pooja event">
 
     <div class="event-content">
         <h3>🌿 తులసి పూజ</h3>
@@ -79,7 +104,7 @@
 
 <!-- EVENT 4 -->
 <div class="event-row reverse">
-    <img src="pournami.jpg">
+    <img src="pournami.jpg" alt="Pournami annadanam event">
 
     <div class="event-content">
        <h3>🌕 పౌర్ణమి భోజనాలు</h3>
@@ -147,10 +172,77 @@
 </div>
 
 </section>
+</main>
 
 <footer>
     © 2026 Sree Chandi Sametha Danavayababu Trust
 </footer>
 
+<script>
+function toggleMode() {
+    document.body.classList.toggle("dark");
+    localStorage.setItem("mode", document.body.classList.contains("dark") ? "dark" : "light");
+}
+
+window.onload = function () {
+    if (localStorage.getItem("mode") === "dark") {
+        document.body.classList.add("dark");
+    }
+};
+</script>
+<!-- JSON STRUCTURED DATA -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Sree Chandi Sametha Danavayababu Temple Trust"
+}
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const audio = document.getElementById("bg-audio");
+    const btn = document.querySelector(".audio-btn");
+
+    if (!audio || !btn) return;
+
+    // restore state
+    if (localStorage.getItem("audio") === "on") {
+        let time = localStorage.getItem("time");
+
+        if (time) audio.currentTime = time;
+
+        audio.play().then(() => {
+            btn.innerText = "🔊";
+        }).catch(() => {
+            // autoplay blocked, wait for user click
+        });
+    }
+
+    // save progress
+    setInterval(() => {
+        if (!audio.paused) {
+            localStorage.setItem("time", audio.currentTime);
+        }
+    }, 1000);
+
+    // global function
+    window.toggleAudio = function () {
+        if (audio.paused) {
+            audio.play();
+            btn.innerText = "🔊";
+            localStorage.setItem("audio", "on");
+        } else {
+            audio.pause();
+            btn.innerText = "🔇";
+            localStorage.setItem("audio", "off");
+        }
+    };
+
+});
+</script>
+
+</body>
+</html>
 </body>
 </html>
