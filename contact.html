@@ -1,34 +1,54 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
 <head>
-    <title>Contact - Temple Construction</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Sree Chandi Sametha Danavayababu Temple Trust</title>
+    <meta name="description" content="Contact Sree Chandi Sametha Danavayababu Temple Trust for donation details, support, and temple construction information.">
+    <link rel="canonical" href="https://harshavardhangokada.github.io/temple-website/contact.html">
+    <meta name="robots" content="index,follow">
+    <meta property="og:title" content="Contact - Sree Chandi Sametha Danavayababu Temple Trust">
+    <meta property="og:description" content="Phone, email, and location details for temple construction support.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://harshavardhangokada.github.io/temple-website/contact.html">
+    <meta property="og:image" content="https://harshavardhangokada.github.io/temple-website/temple.png">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<!-- 🔊 AUDIO SYSTEM -->
+<audio id="bg-audio" loop>
+  <source src="temple-music.opus" type="audio/ogg; codecs=opus">
+  Your browser does not support the audio element.
+</audio>
 
-<!-- Dark Mode Toggle -->
+<button class="audio-btn" onclick="toggleAudio()">🔊</button>
 
-<div class="toggle-btn" onclick="toggleMode()">🌙</div>
-
-<header>
-    <h1>📞 Contact for Temple Construction</h1>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="donate.html">Donate</a>
-        <a href="donators.html">Our Donators</a>
-    </nav>
+<header class="ttd-topbar">
+    <div class="ttd-brand">
+        <img src="amma.jpg" alt="Lord Durgaamma logo">
+        <div>
+            <h1>📞 Contact for Temple Construction</h1>
+        </div>
+    </div>
 </header>
+<nav class="ttd-nav">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="events.html">Events</a>
+    <a href="donate.html">Donate</a>
+    <a href="contact.html">Contact</a>
+    <a href="donators.html">Our Donators</a>
+</nav>
+<main class="page-container">
 
 <section>
     <div class="card">
-
-```
     <h2>🙏 Support Temple Construction</h2>
 
     <p>
         We are currently constructing the 
-        <b>Sri Devi Sametha Danavayababu Temple</b>.
+        <b>Sree Chandi Sametha Danavayababu Temple</b>.
         Devotees who wish to contribute or need more details
         can contact us using the information below.
     </p>
@@ -48,7 +68,7 @@
     </p>
 
     <p><b>📍 Location:</b> 
-    <a href="https://www.google.com/maps?q=KDevi Sametha Danavaibabu Temple" target="_blank">
+    <a href="https://www.google.com/maps?q=Devi%20Sametha%20Danavaibabu%20Temple" target="_blank" rel="noopener noreferrer">
         Devi Sametha Danavaibabu Temple
     </a>
 </p>
@@ -65,14 +85,90 @@
     </p>
 
 </div>
-```
 
 </section>
+</main>
 
 <footer>
-    © 2026 Sri Devi Sametha Danavayababu Temple Construction | With devotion 🙏
+    © 2026 Sree Chandi Sametha Danavayababu Trust | With devotion 🙏
 </footer>
 
+<!-- JSON STRUCTURED DATA -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Sree Chandi Sametha Danavayababu Temple Trust"
+}
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const audio = document.getElementById("bg-audio");
+    const btn = document.querySelector(".audio-btn");
+
+    if (!audio || !btn) return;
+
+    // restore state
+    if (localStorage.getItem("audio") === "on") {
+        let time = localStorage.getItem("time");
+
+        if (time) audio.currentTime = time;
+
+        audio.play().then(() => {
+            btn.innerText = "🔊";
+        }).catch(() => {
+            // autoplay blocked, wait for user click
+        });
+    }
+
+    // save progress
+    setInterval(() => {
+        if (!audio.paused) {
+            localStorage.setItem("time", audio.currentTime);
+        }
+    }, 1000);
+
+    // global function
+    window.toggleAudio = function () {
+        if (audio.paused) {
+            audio.play();
+            btn.innerText = "🔊";
+            localStorage.setItem("audio", "on");
+        } else {
+            audio.pause();
+            btn.innerText = "🔇";
+            localStorage.setItem("audio", "off");
+        }
+    };
+
+});
+</script>
+<!-- 🔊 AUDIO SCRIPT -->
+<script>
+let audio;
+let btn;
+
+window.onload = function () {
+    audio = document.getElementById("bg-audio");
+    btn = document.querySelector(".audio-btn");
+};
+
+function toggleAudio(){
+    if(audio.paused){
+        audio.play().then(()=>{
+            btn.classList.add("playing");
+            btn.innerText = "🔊";
+        }).catch(err=>{
+            alert("Audio not allowed. Click again.");
+        });
+    } else {
+        audio.pause();
+        btn.classList.remove("playing");
+        btn.innerText = "🔇";
+    }
+}
+</script>
 <!-- Dark Mode Script -->
 
 <script>
@@ -92,6 +188,6 @@ window.onload = function () {
     }
 };
 </script>
-
 </body>
 </html>
+
