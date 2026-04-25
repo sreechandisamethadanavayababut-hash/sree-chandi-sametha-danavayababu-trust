@@ -1,84 +1,110 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Sri Devi Sametha Danavaibabu Temple</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sree Chandi Sametha Danavayababu Temple Trust</title>
+
+    <meta name="description" content="Support the construction of Sree Chandi Sametha Danavayababu Temple.">
+    <link rel="canonical" href="https://harshavardhangokada.github.io/temple-website/">
+    
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<!-- Dark Mode Toggle -->
-<div class="toggle-btn" onclick="toggleMode()">🌙</div>
+<!-- 🔊 AUDIO SYSTEM -->
+<audio id="bg-audio" loop>
+  <source src="temple-music.opus" type="audio/ogg; codecs=opus">
+  Your browser does not support the audio element.
+</audio>
 
-<header>
-    <h1>🛕🙏Sree Chandi Sametha Danavayababu Temple Trust🛕🙏</h1>
-    <nav>
-        <nav>
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="events.html">Events</a>
-    <a href="donate.html">Donate</a>
-    <a href="contact.html">Contact</a>
-    <a href="donators.html">Our Donators</a>
-</nav>
+<button class="audio-btn" onclick="toggleAudio()">🔊</button>
+
+<div class="ttd-home">
+
+    <!-- HEADER -->
+    <header class="ttd-topbar">
+        <div class="ttd-brand">
+            <img src="amma.jpg" alt="Lord Durgaamma logo">
+            <div>
+                <h1>SREE CHANDI SAMETHA DANAVAYABABU TEMPLE TRUST</h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- NAV -->
+    <nav class="ttd-nav">
+        <a href="index.html">Home</a>
+        <a href="about.html">About Temple</a>
+        <a href="events.html">Events</a>
+        <a href="donate.html">Online Services</a>
+        <a href="donators.html">Donators</a>
+        <a href="contact.html">Contact</a>
     </nav>
-</header>
 
-<section class="home">
+    <!-- HERO -->
+    <main class="ttd-layout">
+        <section class="ttd-hero-card">
+            <img src="god.jpg" alt="Goddess Durgamma face">
+            <div class="ttd-hero-overlay">
+                <h2>Divine Seva & Live Darshan</h2>
+                <p>Watch now and support temple construction with your contribution.</p>
+                <a href="donate.html" class="ttd-cta">Donate Now</a>
+            </div>
+        </section>
+    </main>
 
-    <!-- Main Heading -->
-    <h2>💰🙏 Support Temple Construction 🙏💰</h2>
-   <div class="goddess-box">
-    <img src="amma.jpg">
+    <!-- SERVICES -->
+    <section class="ttd-services">
+        <div class="ttd-services-head">
+            <h3>Pilgrim Services</h3>
+            <a href="donate.html">More Services</a>
+        </div>
+
+        <div class="ttd-service-grid">
+            <a class="ttd-service" href="events.html"><span>🛕</span><p>Temple Events</p></a>
+            <a class="ttd-service" href="donate.html"><span>💰</span><p>Online Donation</p></a>
+            <a class="ttd-service" href="contact.html"><span>📞</span><p>Contact Support</p></a>
+            <a class="ttd-service" href="donators.html"><span>🙏</span><p>Our Donators</p></a>
+            <a class="ttd-service" href="about.html"><span>🌺</span><p>Temple Info</p></a>
+            <a class="ttd-service" href="events.html"><span>🔥</span><p>Chandi Homam</p></a>
+            <a class="ttd-service" href="donate.html"><span>📷</span><p>UPI QR Donate</p></a>
+            <a class="ttd-service" href="contact.html"><span>📍</span><p>Visit Temple</p></a>
+        </div>
+    </section>
+
 </div>
-</div>
 
-    <!-- Main Card -->
-    <div class="card">
-
-        <p>
-            We are currently constructing the 
-            <b>Sree Chandi Sametha Danavayababu Temple</b>.
-            This sacred place will serve as a center of devotion, peace, and spirituality for our community.
-        </p>
-
-        <p>
-            Your kind contribution will help us complete this divine mission and build a temple for future generations.
-        </p>
-
-        <p class="highlight">
-           🙏 Every donation brings divine blessings ✨
-        </p>
-
-        <!-- Donate Button -->
-        <a href="donate.html">
-            <button>Donate Now 💰</button>
-        </a>
-
-    </div>
-
-</section>
-
+<!-- FOOTER -->
 <footer>
     © 2026 Sree Chandi Sametha Danavayababu Trust | With devotion 🙏
 </footer>
 
-<!-- DARK MODE SCRIPT -->
+<!-- 🔊 AUDIO SCRIPT -->
 <script>
-function toggleMode() {
-    document.body.classList.toggle("dark");
-
-    if (document.body.classList.contains("dark")) {
-        localStorage.setItem("mode", "dark");
-    } else {
-        localStorage.setItem("mode", "light");
-    }
-}
+let audio;
+let btn;
 
 window.onload = function () {
-    if (localStorage.getItem("mode") === "dark") {
-        document.body.classList.add("dark");
-    }
+    audio = document.getElementById("bg-audio");
+    btn = document.querySelector(".audio-btn");
 };
+
+function toggleAudio(){
+    if(audio.paused){
+        audio.play().then(()=>{
+            btn.classList.add("playing");
+            btn.innerText = "🔊";
+        }).catch(err=>{
+            alert("Audio not allowed. Click again.");
+        });
+    } else {
+        audio.pause();
+        btn.classList.remove("playing");
+        btn.innerText = "🔇";
+    }
+}
 </script>
 
 </body>
