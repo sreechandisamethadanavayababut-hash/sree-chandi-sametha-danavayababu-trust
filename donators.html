@@ -1,48 +1,42 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Our Donators</title>
+<title>Our Donators - Sree Chandi Sametha Danavayababu Temple Trust</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Our Donators list and total collected amount for Sree Chandi Sametha Danavayababu Temple Trust.">
+<link rel="canonical" href="https://harshavardhangokada.github.io/temple-website/donators.html">
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="Our Donators - Sree Chandi Sametha Danavayababu Temple Trust">
+<meta property="og:description" content="See our supporters and total collected amount for temple construction.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://harshavardhangokada.github.io/temple-website/donators.html">
+<meta property="og:image" content="https://harshavardhangokada.github.io/temple-website/temple.png">
 <link rel="stylesheet" href="style.css">
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-<style>
-#imageModal{
-display:none;
-position:fixed;
-top:0;left:0;
-width:100%;height:100%;
-background:rgba(0,0,0,0.8);
-justify-content:center;
-align-items:center;
-z-index:1000;
-}
-#modalBox{
-background:white;
-padding:20px;
-border-radius:15px;
-max-width:350px;
-text-align:center;
-}
-#modalImg{
-width:150px;
-height:150px;
-border-radius:50%;
-object-fit:cover;
-margin:10px 0;
-}
-</style>
 
 </head>
-
 <body>
+<!-- 🔊 AUDIO SYSTEM -->
+<audio id="bg-audio" loop>
+  <source src="temple-music.opus" type="audio/ogg; codecs=opus">
+  Your browser does not support the audio element.
+</audio>
 
-<header>
+<button class="audio-btn" onclick="toggleAudio()">🔊</button>
+
+<header class="ttd-topbar">
+<div class="ttd-brand">
+<img src="amma.jpg" alt="Lord Durgaamma logo">
+<div>
 <h1>🙏 Our Donators 🙏</h1>
-<nav>
+</div>
+</div>
+</header>
+<nav class="ttd-nav">
 <a href="index.html">Home</a>
 <a href="about.html">About</a>
 <a href="events.html">Events</a>
@@ -50,43 +44,45 @@ margin:10px 0;
 <a href="contact.html">Contact</a>
 <a href="donators.html">Our Donators</a>
 </nav>
-</header>
 
+<main class="page-container">
 <section class="donators-container">
-
 <div style="text-align:center;margin:20px;">
 <button onclick="filterDonors('all')">All</button>
 <button onclick="filterDonors('vvip')">👑 VVIP</button>
 <button onclick="filterDonors('normal')">🙏 Normal</button>
 </div>
 
+<div style="text-align:center;margin:20px;">
+<input
+  id="searchDonor"
+  type="text"
+  placeholder="Search donor name..."
+  oninput="searchDonors()"
+  style="max-width:360px;width:90%;padding:12px;border-radius:30px;border:1px solid #d1d5db;">
+</div>
+
 <h2 id="totalAmount">💰 Total Collected: ₹0</h2>
 
 <div style="text-align:center;">
-<button onclick="adminLogin()">🔐 Admin Login</button>
+<button id="adminLoginBtn" onclick="adminLogin()">🔐 Admin Login</button>
 </div>
 
 <div id="adminPanel" style="display:none;text-align:center;">
-
 <input id="name" placeholder="Enter Name">
-
 <select id="donationType">
 <option value="money">💰 Money</option>
 <option value="material">🎁 Material</option>
 </select>
-
 <input id="amount" placeholder="Enter Amount / Material">
 <input id="photo" placeholder="Paste Image URL">
 <input id="designation" placeholder="Designation">
-
 <select id="vipType">
 <option value="normal">🙏 Normal</option>
 <option value="vvip">👑 VVIP</option>
 </select>
-
 <br>
 <button onclick="addDonor()">Add Donation</button>
-
 </div>
 
 <table class="donators-table">
@@ -102,349 +98,18 @@ margin:10px 0;
 <th>Action</th>
 </tr>
 </thead>
-
 <tbody id="donorTable"></tbody>
-
 </table>
-
 </section>
 
-<!-- ✅ MODAL -->
-
-<!-- MODAL -->
-<div id="donorModal" class="modal">
-  <div class="modal-content share-card">
-    <div class="trust-title">🛕🙏 Sree Chandi Sametha Danavayababu Temple Trust 🙏🛕</div>
-    <div class="card-line"></div>
-
-    <img id="modalImg" alt="Donor Photo" style="width:150px;height:150px;border-radius:50%;margin:10px auto;">
-
-    <div class="card-name" id="modalName"></div>
-    <div class="card-amount" id="modalAmount"></div>
-    <div class="card-designation" id="modalDesignation"></div>
-    <div class="card-type" id="modalType"></div>
-
-    <div class="card-divider"></div>
-    <div class="card-footer1">🙏 With Devotion 🙏</div>
-    <div class="card-footer2">Sree Chandi Sametha Danavayababu Trust</div>
-  </div>
-</div>
-
-
-</div>
-</div>
-<script>
-async function setOrder(i){
-let newOrder = prompt("Enter new position (1,2,3...)");
-
-if(!newOrder) return;
-
-await db.collection("donors").doc(donors[i].id).update({
-order: parseInt(newOrder)
-});
-
-alert("✅ Order Updated");
-}
-// FIREBASE
-const firebaseConfig = {
-apiKey: "AIzaSyDYSEDrXTyixVYMnQ77C3J_zlCJNahrdAg",
-authDomain: "temple-donations-2f3f6.firebaseapp.com",
-projectId: "temple-donations-2f3f6",
-};
-
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-
-let donors=[];
-let currentFilter="all";
-let isAdmin=false;
-let editId=null;
-
-// TRANSLATE
-async function translateToTelugu(text){
-if(!text) return "";
-
-let map = {
-"mla":"ఎంఎల్ఏ",
-"mp":"ఎంపీ",
-"teacher":"ఉపాధ్యాయుడు",
-"farmer":"రైతు",
-"student":"విద్యార్థి",
-"doctor":"డాక్టర్"
-};
-
-let lower = text.toLowerCase();
-if(map[lower]) return map[lower];
-
-try{
-let res = await fetch(
-"https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=te&dt=t&q=" + encodeURIComponent(text)
-);
-let data = await res.json();
-return data[0][0][0];
-}catch(e){
-return text;
-}
-}
-
-// LOAD
-function loadDonors(){
-db.collection("donors").onSnapshot(snapshot=>{
-donors=[];
-snapshot.forEach(doc=>donors.push({id:doc.id,...doc.data()}));
-displayDonors();
-});
-}
-
-// LOGIN
-function adminLogin(){
-let pass=prompt("Enter Password");
-if(pass==="Hs@561986"){
-isAdmin=true;
-document.getElementById("adminPanel").style.display="block";
-displayDonors();
-alert("✅ Admin Login Success");
-}else{
-alert("❌ Wrong Password");
-}
-}
-
-// ADD
-async function addDonor(){
-
-let nameInput=document.getElementById("name").value.trim();
-let amount=document.getElementById("amount").value.trim();
-let photo=document.getElementById("photo").value.trim();
-let designationInput=document.getElementById("designation").value.trim();
-let type=document.getElementById("vipType").value;
-let donationType=document.getElementById("donationType").value;
-
-if(!nameInput || !amount){
-alert("⚠️ Enter details");
-return;
-}
-
-if(!photo){
-photo="https://via.placeholder.com/100";
-}
-
-// 🔥 TRANSLATION FIX
-let name=await translateToTelugu(nameInput);
-let designation=await translateToTelugu(designationInput);
-
-// 🔥 FIXED DONATION TRANSLATION
-let finalAmount;
-
-if(donationType === "money"){
-    finalAmount = "₹" + amount;
-}else{
-    finalAmount = await translateToTelugu(amount);
-}
-
-// 🔥 NEW ORDER FEATURE
-let orderInput = prompt("Enter display order (1,2,3...)");
-let order = parseInt(orderInput);
-
-if(isNaN(order)){
-    order = Date.now(); // fallback
-}
-
-// 🔥 ADD / UPDATE
-if(editId){
-await db.collection("donors").doc(editId).update({
-name,
-amount: finalAmount,
-donationType,
-photo,
-designation,
-type,
-order   // 🔥 added
-});
-editId=null;
-alert("✅ Updated");
-}else{
-await db.collection("donors").add({
-name,
-amount: finalAmount,
-donationType,
-photo,
-designation,
-type,
-status:"pending",
-order   // 🔥 added
-});
-alert("✅ Added");
-}
-
-// CLEAR INPUTS
-document.getElementById("name").value="";
-document.getElementById("amount").value="";
-document.getElementById("photo").value="";
-document.getElementById("designation").value="";
-}
-// DELETE
-async function deleteDonor(i){
-await db.collection("donors").doc(donors[i].id).delete();
-}
-
-// STATUS
-async function toggleStatus(i){
-let d=donors[i];
-let newStatus=d.status==="done"?"pending":"done";
-await db.collection("donors").doc(d.id).update({status:newStatus});
-}
-
-// EDIT
-function editDonor(i){
-let d=donors[i];
-editId=d.id;
-
-document.getElementById("name").value=d.name;
-document.getElementById("amount").value=d.amount.replace("₹","");
-document.getElementById("photo").value=d.photo;
-document.getElementById("designation").value=d.designation;
-document.getElementById("vipType").value=d.type;
-document.getElementById("donationType").value=d.donationType||"money";
-}
-
-// FILTER
-function filterDonors(type){
-currentFilter=type;
-displayDonors();
-donors.sort((a,b)=> (a.order||0) - (b.order||0));
-}
-
-// ✅ POPUP UPDATED
-function showImage(src, name, amount, designation, type) {
-  document.getElementById("modalImg").src = src;
-  document.getElementById("modalName").innerText = "🧑‍💼 Name: " + name;
-  document.getElementById("modalAmount").innerText = "💰 Donation: " + amount;
-  document.getElementById("modalDesignation").innerText = "📋 Designation: " + (designation || "-");
-  document.getElementById("modalType").innerText =
-    type === "material" ? "🎁 Type: వస్తు విరాళం" : "🎁 Type: నగదు విరాళం";
-
-  document.getElementById("donorModal").style.display = "block";
-}
-
-function closeModal() {
-  document.getElementById("donorModal").style.display = "none";
-}
-
-window.onclick = function(e) {
-  if (e.target == document.getElementById("donorModal")) {
-    document.getElementById("donorModal").style.display = "none";
-  }
-};
-//share donor 
-function shareDonor(i){
-
-let d = donors[i];
-
-// message
-let message = `🙏 Temple Donation 🙏
-Name: ${d.name}
-Donation: ${d.amount}
-Designation: ${d.designation || "-"}`;
-
-// ✅ MOBILE SHARE (BEST)
-if (navigator.share) {
-    navigator.share({
-        title: "Temple Donation",
-        text: message
-    }).catch(err => console.log(err));
-} else {
-    // fallback for desktop
-    window.open("https://wa.me/?text=" + encodeURIComponent(message), "_blank");
-}
-
-}
-
-// DISPLAY
-function displayDonors(){
-donors.sort((a,b)=> (a.order || 9999) - (b.order || 9999));
-let table=document.getElementById("donorTable");
-table.innerHTML="";
-let total=0;
-let s=1;
-
-donors.forEach((d,i)=>{
-
-if(currentFilter==="vvip"&&d.type!=="vvip") return;
-if(currentFilter==="normal"&&d.type!=="normal") return;
-
-let val=parseInt((d.amount||"0").replace("₹",""))||0;
-total+=val;
-
-table.innerHTML+=`
-<tr>
-<td>${s++}</td>
-
-<td>
-<img src="${d.photo}" 
-onclick="showImage('${d.photo}','${d.name}','${d.amount}','${d.designation}','${d.donationType}')"
-onerror="this.onerror=null;this.src='https://via.placeholder.com/100';"
-style="width:60px;height:60px;border-radius:50%;cursor:pointer;">
-</td>
-
-<td>${d.name}</td>
-<td>${d.donationType==="material"?"🎁 "+d.amount:"💰 "+d.amount}</td>
-<td>${d.designation||"-"}</td>
-<td>${d.type==="vvip"?"👑 విశిష్ట దాత":"🙏 సాధారణ దాత"}</td>
-<td>${d.status==="done"?"✔️":"⏳"}</td>
-
-<td>
-${isAdmin?`
-<button onclick="editDonor(${i})">✏️Edit</button>
-<button onclick="shareDonor(${i})">📤 Share</button>
-<button onclick="toggleStatus(${i})">🔄Status</button>
-<button onclick="deleteDonor(${i})">🗑️Delete</button>
-<button onclick="setOrder(${i})">📌</button>
-`:""}
-</td>
-
-</tr>`;
-});
-
-document.getElementById("totalAmount").innerText="💰 Total Collected: ₹"+total;
-}
-
-// INIT
-loadDonors();
-function openModal(photo, name, amount, designation) {
-  document.getElementById("modalImg").src = photo;
-  document.getElementById("modalName").innerText = "🧑‍💼 Name: " + name;
-  document.getElementById("modalAmount").innerText = "💰 Donation: " + amount;
-  document.getElementById("modalDesignation").innerText = "📋 Designation: " + (designation || "-");
-  document.getElementById("modalType").innerText =
-    amount.includes("₹") ? "🎁 Type: నగదు విరాళం" : "🎁 Type: వస్తు విరాళం";
-
-  document.getElementById("donorModal").style.display = "block";
-}
-
-function closeModal() {
-  document.getElementById("donorModal").style.display = "none";
-}
-
-window.onclick = function(e) {
-  if (e.target == document.getElementById("donorModal")) {
-    document.getElementById("donorModal").style.display = "none";
-  }
-};
-
-</script>
-<!-- Donor Popup -->
 <div id="donorModal" class="modal">
   <div class="modal-content">
     <div class="modal-header">
-      <h1>🛕🙏 Sree Chandi Sametha Danavayababu Temple Trust 🛕🙏</h1>
-      <span class="close" onclick="closeModal()">×</span>
+      <h3>🛕🙏 Sree Chandi Sametha Danavayababu Temple Trust 🛕🙏</h3>
+      <span style="cursor:pointer;font-size:22px;color:red;" onclick="closeModal()">❌</span>
     </div>
-
     <div class="modal-body">
-      <!-- Left: Donor Image -->
-      <img id="modalImg">
-
-      <!-- Right: Donor Details -->
+      <img id="modalImg" alt="Donor Photo">
       <div>
         <p id="modalName">🧑‍💼 Name:</p>
         <p id="modalAmount">💰 Donation:</p>
@@ -454,30 +119,384 @@ window.onclick = function(e) {
     </div>
   </div>
 </div>
-<!-- GREETING CARD (HIDDEN) -->
-<div id="greetingCard" style="
-position:absolute;
-left:-9999px;
-width:600px;
-padding:20px;
-background:linear-gradient(135deg,#ffcc70,#ff8177);
-color:#000;
-font-family:sans-serif;
-border-radius:20px;
-text-align:center;
-">
+</main>
 
-<h2>🛕🙏 Sree Chandi Sametha Danavayababu Temple Trust 🙏🛕</h2>
+<footer>
+    © 2026 Sree Chandi Sametha Danavayababu Trust | With devotion 🙏
+</footer>
 
-<img id="cardImg" style="width:150px;height:150px;border-radius:50%;object-fit:cover;margin:10px;">
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyDYSEDrXTyixVYMnQ77C3J_zlCJNahrdAg",
+  authDomain: "temple-donations-2f3f6.firebaseapp.com",
+  projectId: "temple-donations-2f3f6"
+};
 
-<h3 id="cardName"></h3>
-<p id="cardAmount"></p>
-<p id="cardDesignation"></p>
+let db = null;
+let firebaseReady = false;
 
-<p>🙏 Thank you for your contribution 🙏</p>
+if (window.firebase && typeof firebase.initializeApp === "function" && typeof firebase.firestore === "function") {
+  try {
+    firebase.initializeApp(firebaseConfig);
+    db = firebase.firestore();
+    firebaseReady = true;
+  } catch (error) {
+    console.error("Firebase initialization error:", error);
+    firebaseReady = false;
+  }
+} else {
+  console.error("Firebase failed to load. Check internet or CDN availability.");
+}
 
-</div>
+let donors = [];
+let currentFilter = "all";
+let currentSearchTerm = "";
+let currentSearchTermTelugu = "";
+let searchTranslateTimer = null;
+let searchRequestId = 0;
+let isAdmin = false;
+let editId = null;
 
+function toggleMode() {
+  document.body.classList.toggle("dark");
+  localStorage.setItem("mode", document.body.classList.contains("dark") ? "dark" : "light");
+}
+
+window.onload = function () {
+  if (localStorage.getItem("mode") === "dark") {
+    document.body.classList.add("dark");
+  }
+  loadDonors();
+};
+
+async function translateToTelugu(text) {
+  if (!text) return "";
+  const map = {
+    mla: "ఎంఎల్ఏ",
+    mp: "ఎంపీ",
+    teacher: "ఉపాధ్యాయుడు",
+    farmer: "రైతు",
+    student: "విద్యార్థి",
+    doctor: "డాక్టర్"
+  };
+  const lower = String(text).toLowerCase();
+  if (map[lower]) return map[lower];
+
+  try {
+    const res = await fetch("https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=te&dt=t&q=" + encodeURIComponent(text));
+    const data = await res.json();
+    return data[0][0][0];
+  } catch (e) {
+    return text;
+  }
+}
+
+function loadDonors() {
+  if (!firebaseReady || !db) {
+    document.getElementById("totalAmount").innerText = "⚠️ Unable to load donors (Firebase not available)";
+    return;
+  }
+  db.collection("donors").onSnapshot((snapshot) => {
+    donors = [];
+    snapshot.forEach((doc) => donors.push({ id: doc.id, ...doc.data() }));
+    displayDonors();
+  });
+}
+
+function adminLogin() {
+  const pass = prompt("Enter Password");
+  if (pass === null) return;
+
+  const normalizedPass = pass.trim();
+  if (normalizedPass === "Hs@561986") {
+    isAdmin = true;
+    document.getElementById("adminPanel").style.display = "block";
+    displayDonors();
+    alert("✅ Admin Login Success");
+  } else {
+    alert("❌ Wrong Password");
+  }
+}
+
+async function setOrder(i) {
+  if (!firebaseReady || !db) {
+    alert("⚠️ Firebase is not available right now. Please check internet and reload.");
+    return;
+  }
+  const newOrder = prompt("Enter new position (1,2,3...)");
+  if (!newOrder) return;
+  await db.collection("donors").doc(donors[i].id).update({ order: parseInt(newOrder, 10) });
+  alert("✅ Order Updated");
+}
+
+async function addDonor() {
+  if (!firebaseReady || !db) {
+    alert("⚠️ Firebase is not available right now. Please check internet and reload.");
+    return;
+  }
+  const nameInput = document.getElementById("name").value.trim();
+  const amount = document.getElementById("amount").value.trim();
+  let photo = document.getElementById("photo").value.trim();
+  const designationInput = document.getElementById("designation").value.trim();
+  const type = document.getElementById("vipType").value;
+  const donationType = document.getElementById("donationType").value;
+
+  if (!nameInput || !amount) {
+    alert("⚠️ Enter details");
+    return;
+  }
+
+  if (!photo) {
+    photo = "https://via.placeholder.com/100";
+  }
+
+  const name = await translateToTelugu(nameInput);
+  const designation = await translateToTelugu(designationInput);
+  const finalAmount = donationType === "money" ? ("₹" + amount) : await translateToTelugu(amount);
+
+  const orderInput = prompt("Enter display order (1,2,3...)");
+  let order = parseInt(orderInput, 10);
+  if (Number.isNaN(order)) order = Date.now();
+
+  if (editId) {
+    await db.collection("donors").doc(editId).update({
+      name,
+      amount: finalAmount,
+      donationType,
+      photo,
+      designation,
+      type,
+      order
+    });
+    editId = null;
+    alert("✅ Updated");
+  } else {
+    await db.collection("donors").add({
+      name,
+      amount: finalAmount,
+      donationType,
+      photo,
+      designation,
+      type,
+      status: "pending",
+      order
+    });
+    alert("✅ Added");
+  }
+
+  document.getElementById("name").value = "";
+  document.getElementById("amount").value = "";
+  document.getElementById("photo").value = "";
+  document.getElementById("designation").value = "";
+}
+
+async function deleteDonor(i) {
+  if (!firebaseReady || !db) {
+    alert("⚠️ Firebase is not available right now. Please check internet and reload.");
+    return;
+  }
+  await db.collection("donors").doc(donors[i].id).delete();
+}
+
+async function toggleStatus(i) {
+  if (!firebaseReady || !db) {
+    alert("⚠️ Firebase is not available right now. Please check internet and reload.");
+    return;
+  }
+  const d = donors[i];
+  const newStatus = d.status === "done" ? "pending" : "done";
+  await db.collection("donors").doc(d.id).update({ status: newStatus });
+}
+
+function editDonor(i) {
+  const d = donors[i];
+  editId = d.id;
+  document.getElementById("name").value = d.name || "";
+  document.getElementById("amount").value = (d.amount || "").replace("₹", "");
+  document.getElementById("photo").value = d.photo || "";
+  document.getElementById("designation").value = d.designation || "";
+  document.getElementById("vipType").value = d.type || "normal";
+  document.getElementById("donationType").value = d.donationType || "money";
+}
+
+function filterDonors(type) {
+  currentFilter = type;
+  displayDonors();
+}
+
+function searchDonors() {
+  currentSearchTerm = document.getElementById("searchDonor").value.trim().toLowerCase();
+  currentSearchTermTelugu = "";
+  searchRequestId += 1;
+  const activeRequestId = searchRequestId;
+
+  if (searchTranslateTimer) {
+    clearTimeout(searchTranslateTimer);
+  }
+
+  if (!currentSearchTerm) {
+    displayDonors();
+    return;
+  }
+
+  // Debounce translation requests while user is typing.
+  searchTranslateTimer = setTimeout(async () => {
+    try {
+      const translated = await translateToTelugu(currentSearchTerm);
+      if (activeRequestId !== searchRequestId) return;
+      currentSearchTermTelugu = String(translated || "").toLowerCase();
+    } catch (e) {
+      currentSearchTermTelugu = "";
+    }
+    displayDonors();
+  }, 250);
+
+  displayDonors();
+}
+
+function showImage(src, name, amount, designation, donationType) {
+  document.getElementById("modalImg").src = src;
+  document.getElementById("modalName").innerText = "🧑‍💼 Name: " + name;
+  document.getElementById("modalAmount").innerText = "💰 Donation: " + amount;
+  document.getElementById("modalDesignation").innerText = "📋 Designation: " + (designation || "-");
+  document.getElementById("modalType").innerText = donationType === "material" ? "🎁 Type: వస్తు విరాళం" : "🎁 Type: నగదు విరాళం";
+  document.getElementById("donorModal").style.display = "block";
+}
+
+function closeModal() {
+  document.getElementById("donorModal").style.display = "none";
+}
+
+window.onclick = function (e) {
+  if (e.target === document.getElementById("donorModal")) {
+    closeModal();
+  }
+};
+
+const adminLoginBtn = document.getElementById("adminLoginBtn");
+if (adminLoginBtn) {
+  adminLoginBtn.addEventListener("click", adminLogin);
+}
+
+function shareDonor(i) {
+  const d = donors[i];
+  const message = `🙏 Temple Donation 🙏
+Name: ${d.name}
+Donation: ${d.amount}
+Designation: ${d.designation || "-"}`;
+
+  if (navigator.share) {
+    navigator.share({
+      title: "Temple Donation",
+      text: message
+    }).catch(() => {});
+  } else {
+    window.open("https://wa.me/?text=" + encodeURIComponent(message), "_blank");
+  }
+}
+
+function displayDonors() {
+  donors.sort((a, b) => (a.order || 9999) - (b.order || 9999));
+  const table = document.getElementById("donorTable");
+  table.innerHTML = "";
+  let total = 0;
+  let s = 1;
+
+  donors.forEach((d, i) => {
+    if (currentFilter === "vvip" && d.type !== "vvip") return;
+    if (currentFilter === "normal" && d.type !== "normal") return;
+    if (currentSearchTerm) {
+      const donorName = String(d.name || "").toLowerCase();
+      const matchesEnglishTyped = donorName.includes(currentSearchTerm);
+      const matchesTranslatedTelugu = currentSearchTermTelugu && donorName.includes(currentSearchTermTelugu);
+      if (!matchesEnglishTyped && !matchesTranslatedTelugu) return;
+    }
+
+    const val = parseInt((d.amount || "0").replace("₹", ""), 10) || 0;
+    total += val;
+
+    table.innerHTML += `
+      <tr>
+        <td>${s++}</td>
+        <td>
+          <img src="${d.photo}"
+               onclick="showImage('${d.photo}','${d.name}','${d.amount}','${d.designation || ""}','${d.donationType || "money"}')"
+               onerror="this.onerror=null;this.src='https://via.placeholder.com/100';"
+               alt="Donor image"
+               style="width:60px;height:60px;border-radius:50%;cursor:pointer;">
+        </td>
+        <td>${d.name}</td>
+        <td>${d.donationType === "material" ? "🎁 " + d.amount : "💰 " + d.amount}</td>
+        <td>${d.designation || "-"}</td>
+        <td>${d.type === "vvip" ? "👑 విశిష్ట దాత" : "🙏 సాధారణ దాత"}</td>
+        <td>${d.status === "done" ? "✔️" : "⏳"}</td>
+        <td>
+          ${isAdmin ? `
+            <button onclick="editDonor(${i})">✏️Edit</button>
+            <button onclick="shareDonor(${i})">📤 Share</button>
+            <button onclick="toggleStatus(${i})">🔄Status</button>
+            <button onclick="deleteDonor(${i})">🗑️Delete</button>
+            <button onclick="setOrder(${i})">📌</button>` : ""}
+        </td>
+      </tr>`;
+  });
+
+  document.getElementById("totalAmount").innerText = "💰 Total Collected: ₹" + total;
+}
+</script>
+<!-- JSON STRUCTURED DATA -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Sree Chandi Sametha Danavayababu Temple Trust"
+}
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const audio = document.getElementById("bg-audio");
+    const btn = document.querySelector(".audio-btn");
+
+    if (!audio || !btn) return;
+
+    // restore state
+    if (localStorage.getItem("audio") === "on") {
+        let time = localStorage.getItem("time");
+
+        if (time) audio.currentTime = time;
+
+        audio.play().then(() => {
+            btn.innerText = "🔊";
+        }).catch(() => {
+            // autoplay blocked, wait for user click
+        });
+    }
+
+    // save progress
+    setInterval(() => {
+        if (!audio.paused) {
+            localStorage.setItem("time", audio.currentTime);
+        }
+    }, 1000);
+
+    // global function
+    window.toggleAudio = function () {
+        if (audio.paused) {
+            audio.play();
+            btn.innerText = "🔊";
+            localStorage.setItem("audio", "on");
+        } else {
+            audio.pause();
+            btn.innerText = "🔇";
+            localStorage.setItem("audio", "off");
+        }
+    };
+
+});
+</script>
+</body>
+</html>
 </body>
 </html>
